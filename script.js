@@ -96,7 +96,11 @@ function parseDigitPattern(textPattern) {
   
   for (let i = 0; i < 24; i++) {
     const char = textPattern[i];
-    pattern.push(charToAngles[char] || [180, 180]);
+    const angles = charToAngles[char];
+    if (!angles) {
+      throw new Error(`Unknown glyph character "${char}" at cell ${i}`);
+    }
+    pattern.push(angles);
   }
   
   return pattern;
