@@ -184,8 +184,9 @@ function updateDisplay() {
   updateClockHands(digitElements[3], parseInt(minutes[1]));
   updateClockHands(digitElements[4], parseInt(seconds[0]));
   updateClockHands(digitElements[5], parseInt(seconds[1]));
+  
+  setTimeout(updateDisplay, 1000 - (Date.now() % 1000));
 }
 
 initDisplay();
 updateDisplay();
-setInterval(updateDisplay, 1000);
