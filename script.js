@@ -178,12 +178,12 @@ function updateDisplay() {
   const minutes = String(now.getMinutes()).padStart(2, '0');
   const seconds = String(now.getSeconds()).padStart(2, '0');
   
-  updateClockHands(digitElements[0], parseInt(hours[0]));
-  updateClockHands(digitElements[1], parseInt(hours[1]));
-  updateClockHands(digitElements[2], parseInt(minutes[0]));
-  updateClockHands(digitElements[3], parseInt(minutes[1]));
-  updateClockHands(digitElements[4], parseInt(seconds[0]));
-  updateClockHands(digitElements[5], parseInt(seconds[1]));
+  updateClockHands(digitElements[0], parseInt(hours[0], 10));
+  updateClockHands(digitElements[1], parseInt(hours[1], 10));
+  updateClockHands(digitElements[2], parseInt(minutes[0], 10));
+  updateClockHands(digitElements[3], parseInt(minutes[1], 10));
+  updateClockHands(digitElements[4], parseInt(seconds[0], 10));
+  updateClockHands(digitElements[5], parseInt(seconds[1], 10));
   
   setTimeout(updateDisplay, 1000 - (Date.now() % 1000));
 }
