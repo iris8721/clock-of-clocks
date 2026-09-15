@@ -126,33 +126,34 @@ function createClock(hourAngle, minuteAngle) {
   clock.appendChild(hourHand);
   clock.appendChild(minuteHand);
   
-  return clock;
+  return { element: clock, hourHand, minuteHand };
 }
 
 function createDigit(num) {
-  const digit = document.createElement('div');
-  digit.className = 'digit';
+  const element = document.createElement('div');
+  element.className = 'digit';
   
+  const clocks = [];
   const pattern = digitPatterns[num];
   for (let i = 0; i < 24; i++) {
     const [hourAngle, minuteAngle] = pattern[i];
-    digit.appendChild(createClock(hourAngle, minuteAngle));
+    const clock = createClock(hourAngle, minuteAngle);
+    element.appendChild(clock.element);
+    clocks.push(clock);
   }
   
-  return digit;
+  return { element, clocks, value: num };
 }
 
 function updateClockHands(digit, num) {
-  const pattern = digitPatterns[num];
-  const clocks = digit.querySelectorAll('.clock');
+  if (digit.value === num) return;
+  digit.value = num;
   
-  clocks.forEach((clock, i) => {
+  const pattern = digitPatterns[num];
+  digit.clocks.forEach((clock, i) => {
     const [hourAngle, minuteAngle] = pattern[i];
-    const hourHand = clock.querySelector('.hour');
-    const minuteHand = clock.querySelector('.minute');
-    
-    hourHand.style.transform = `rotate(${hourAngle}deg)`;
-    minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
+    clock.hourHand.style.transform = `rotate(${hourAngle}deg)`;
+    clock.minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
   });
 }
 
@@ -165,7 +166,7 @@ function initDisplay() {
   
   for (let i = 0; i < 6; i++) {
     digitElements.push(createDigit(0));
-    container.appendChild(digitElements[i]);
+    container.appendChild(digitElements[i].element);
     
     if (i === 1 || i === 3) {
       const colon = document.createElement('div');
